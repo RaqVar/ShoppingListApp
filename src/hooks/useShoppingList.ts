@@ -6,14 +6,15 @@ import { shoppingListReducer, initialState } from '@/reducers/shoppingListReduce
 export function useShoppingList() {
     const [state, dispatch] = useReducer(shoppingListReducer, initialState);
 
-    const addItem = useCallback((name: string, quantity: number = 1, category: string) => {
+    const addItem = useCallback((name: string, description: string, price: number = 0, quantity: number = 1) => {
         const newItem: ShoppingItem = {
             id: uuidv4(),
             name,
+            description,
+            price,
             quantity,
             completed: false,
             createdAt: new Date(),
-            category
         };
 
         dispatch({ type: 'ADD_ITEM', payload: newItem });
