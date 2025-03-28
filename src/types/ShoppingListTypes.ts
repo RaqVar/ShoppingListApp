@@ -1,11 +1,12 @@
 export interface ShoppingItem {
     id: string;
     name: string;
+    description: string;
+    price: number;
     quantity: number;
     completed: boolean;
     createdAt: Date;
     updatedAt?: Date;
-    category: string;
 }
 
 export interface ShoppingListState {
