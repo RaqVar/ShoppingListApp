@@ -10,11 +10,11 @@ export const ShopList = () => {
   const router = useRouter();
 
   const handleCreateProduct = () => {
-    router.push('/ShoppingCard.tsx');
+    router.push('/item-manager');
   };
 
   const handleEditItem = (id: string) => {
-    router.push(`/ShoppingCard/${id}`);
+    router.push(`/item-manager/${id}`);
   };
 
   const totalPrice = state.items.reduce((total, item) => total + (item.price * item.quantity), 0);

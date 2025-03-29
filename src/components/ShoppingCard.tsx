@@ -17,7 +17,7 @@ const Card = ({ product }: { product?: ShoppingItem }) => {
     <div className="max-w-md mx-auto p-6 pr-15 pl-15 bg-[#0a0214] text-white rounded-2xl shadow-lg border border-gray-500">
       <div className="flex justify-center">
         <Image
-          src={product ? "/Edit.png" : "/Create.png"}
+          src={product ? "/images/Edit.png" : "/images/Create.png"}
           alt="Edit Product"
           width={100}
           height={100}
