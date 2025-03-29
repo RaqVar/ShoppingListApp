@@ -1,18 +1,12 @@
 'use client'
-import { useReducer } from "react";
 import { ShoppingItem } from "@/types/ShoppingListTypes";
 import { useShoppingForm } from "@/hooks/useShoppingForm";
-import { shoppingListReducer } from "@/reducers/shoppingListReducer";
-import { ShoppingListState } from "@/types/ShoppingListTypes";
 import Link from "next/link";
 import Image from "next/image";
-
-const initialState = { items: [] };
 
 const Card = ({ product }: { product?: ShoppingItem }) => {
 
   const { formRef, handleSubmit } = useShoppingForm({ product });
-  console.log("RENDER!!")
   return (
     <div className="max-w-md mx-auto p-6 pr-15 pl-15 bg-[#0a0214] text-white rounded-2xl shadow-lg border border-gray-500">
       <div className="flex justify-center">
@@ -29,6 +23,7 @@ const Card = ({ product }: { product?: ShoppingItem }) => {
       </h1>
 
       <form ref={formRef} onSubmit={handleSubmit} className="space-y-4 mt-4">
+      <input type="hidden" name="id" value={product?.id} />
         <div>
           <label className="block text-sm font-medium text-gray-300">Name</label>
           <input
