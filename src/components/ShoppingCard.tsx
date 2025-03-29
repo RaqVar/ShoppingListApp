@@ -2,27 +2,17 @@
 import { useReducer } from "react";
 import { ShoppingItem } from "@/types/ShoppingListTypes";
 import { useShoppingForm } from "@/hooks/useShoppingForm";
+import { shoppingListReducer } from "@/reducers/shoppingListReducer";
+import { ShoppingListState } from "@/types/ShoppingListTypes";
 import Link from "next/link";
 import Image from "next/image";
 
 const initialState = { items: [] };
 
-function shoppingListReducer(state: any, action: any) {
-  switch (action.type) {
-    case "ADD_ITEM":
-      return { items: [...state.items, action.payload] };
-    case "REMOVE_ITEM":
-      return { items: state.items.filter((_: any, index: string) => index !== action.index) };
-    default:
-      return state;
-  }
-}
-
 const Card = ({ product }: { product?: ShoppingItem }) => {
 
   const { formRef, handleSubmit } = useShoppingForm({ product });
-  const [state, dispatch] = useReducer(shoppingListReducer, initialState);
-
+  console.log("RENDER!!")
   return (
     <div className="max-w-md mx-auto p-6 pr-15 pl-15 bg-[#0a0214] text-white rounded-2xl shadow-lg border border-gray-500">
       <div className="flex justify-center">
@@ -44,7 +34,7 @@ const Card = ({ product }: { product?: ShoppingItem }) => {
           <input
             name="name"
             type="text"
-            value={product?.name}
+            defaultValue={product?.name}
             placeholder="Enter product name"
             className="w-full p-2 mt-1 bg-gray-900 border border-grey-400 rounded-lg text-white focus:ring-2 focus:ring-purple-500"
           />
@@ -54,7 +44,7 @@ const Card = ({ product }: { product?: ShoppingItem }) => {
           <label className="block text-sm font-medium text-gray-300">Description</label>
           <textarea
             name="description"
-            value={product?.description}
+            defaultValue={product?.description}
             placeholder="Enter description"
             className="w-full p-2 mt-1 bg-gray-900 border border-grey-400 rounded-lg text-white focus:ring-2 focus:ring-purple-500"
           />
@@ -66,7 +56,7 @@ const Card = ({ product }: { product?: ShoppingItem }) => {
             name="price"
             type="number"
             step="0.01"
-            value={product?.price}
+            defaultValue={product?.price}
             placeholder="Enter price"
             min={0}
             className="w-full p-2 mt-1 bg-gray-900 border border-grey-400 rounded-lg text-white focus:ring-2 focus:ring-purple-500"
@@ -78,7 +68,7 @@ const Card = ({ product }: { product?: ShoppingItem }) => {
           <input
             name="quantity"
             type="number"
-            value={product?.quantity}
+            defaultValue={product?.quantity}
             placeholder="Enter quantity"
             min={0}
             className="w-full p-2 mt-1 bg-gray-900 border border-grey-400 rounded-lg text-white focus:ring-2 focus:ring-purple-500"
