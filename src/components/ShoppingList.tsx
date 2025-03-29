@@ -34,7 +34,7 @@ export const ShopList = () => {
         </button>
       </div>
 
-      <div>
+      <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {state.items.map(item => (
           <ShopItem 
             key={item.id}
@@ -47,7 +47,7 @@ export const ShopList = () => {
       </div>
 
       {state.items.length > 0 && (
-        <div className="mt-4 p-3 bg-gray-100 rounded-lg text-right">
+        <div className="mt-10 p-3 rounded-lg text-right">
           <p className="text-lg font-bold">
             Total: ${totalPrice.toFixed(2)}
           </p>

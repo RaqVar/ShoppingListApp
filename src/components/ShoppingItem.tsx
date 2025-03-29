@@ -8,46 +8,44 @@ interface ShopItemProps {
   onRemove: (id: string) => void;
 }
 
-export const ShopItem = ({ 
-  item, 
-  onToggleComplete, 
+export const ShopItem = ({
+  item,
+  onToggleComplete,
   onEditView,
   onRemove
 }: ShopItemProps) => {
   return (
-    <div className={`flex items-center justify-between p-4 border rounded-lg mb-2 ${item.completed ? 'bg-gray-100 line-through' : ''}`}>
-      <div className="flex items-center space-x-4 flex-grow">
-        <input 
+    <div className={`flex flex-col items-start p-4 border rounded-lg mb-2 ${item.completed ? 'line-through' : ''}`}>
+      <div className="flex w-full justify-between items-center mb-3">
+        <p className={`text-lg font-semibold ${item.completed ? 'text-gray-500' : ''}`}>
+          {item.name}
+        </p>
+        <input
           type="checkbox"
           checked={item.completed}
           onChange={() => onToggleComplete(item.id)}
           className="form-checkbox h-5 w-5"
         />
-        <div className="flex-grow">
-          <p className={`font-medium ${item.completed ? 'text-gray-500' : ''}`}>
-            {item.name}
-          </p>
-          <p className="text-sm text-gray-500">
-            {item.description}
-          </p>
-          <div className="flex justify-between text-sm">
-            <span>Quantity: {item.quantity}</span>
-            <span>Price: ${item.price.toFixed(2)}</span>
-          </div>
-        </div>
       </div>
-      <div className="flex space-x-2">
-        <button 
+      <p className="text-sm text-gray-500 mb-2">
+        {item.description}
+      </p>
+      <div className="flex flex-col w-full mt-2 gap-2">
+        <span>Quantity: {item.quantity}</span>
+        <span>Price: ${item.price.toFixed(2)}</span>
+      </div>
+      <div className="flex w-full justify-end gap-2 mt-3">
+        <button
           onClick={() => onEditView(item.id)}
           className="text-blue-500 hover:bg-blue-100 p-2 rounded"
         >
-          <img src="/images/Create.png" alt="Create Icon" width={25} height={25}/>
+          <img src="/images/Edit.png" alt="Create Icon" width={25} height={25} />
         </button>
-        <button 
+        <button
           onClick={() => onRemove(item.id)}
           className="text-red-500 hover:bg-red-100 p-2 rounded"
         >
-          <img src="/images/Remove.png" alt="Remove Icon" width={25} height={25}/>
+          <img src="/images/Remove.png" alt="Remove Icon" width={25} height={25} />
         </button>
       </div>
     </div>
