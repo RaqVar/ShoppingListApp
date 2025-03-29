@@ -13,7 +13,7 @@ const ItemManagerPage = () => {
 
     return (
         <div>
-            <Card/>
+            <Card product={product}/>
         </div>
     )
 }
