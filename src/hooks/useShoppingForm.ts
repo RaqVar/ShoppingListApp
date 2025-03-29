@@ -1,11 +1,12 @@
 import { useRef, useEffect, useCallback } from "react";
-import { useShoppingList } from "../hooks/useShoppingList";
+import { useShoppingList } from "./useShoppingList";
 import { ShoppingItem } from "@/types/ShoppingListTypes";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export function useShoppingForm({ product }: { product?: ShoppingItem }) {
   const formRef = useRef<HTMLFormElement>(null);
   const { addItem, editItem } = useShoppingList();
+  const router = useRouter();
 
   useEffect(() => {
     if (product?.id && formRef.current) {
@@ -24,6 +25,7 @@ export function useShoppingForm({ product }: { product?: ShoppingItem }) {
     if (!formRef.current) return;
 
     const formData = new FormData(formRef.current);
+    const id = formData.get("id") as string;
     const name = formData.get("name") as string;
     const description = formData.get("description") as string;
     const price = parseFloat(formData.get("price") as string);
@@ -31,18 +33,22 @@ export function useShoppingForm({ product }: { product?: ShoppingItem }) {
 
     if (!name.trim()) return;
 
-    if (product?.id) {
-      editItem({ id: product.id, name, description, price, quantity });
-      console.log("Product updated:", { id: product.id, name, description, price, quantity });
+    if (id) {
+      editItem({ id, name, description, price, quantity });
+      console.log("Product updated:", { id, name, description, price, quantity });
     } else {
       addItem(name, description, price, quantity);
       console.log("Item added:", { name, description, price, quantity });
     }
 
-    console.log("Form submitted:", { name, description, price, quantity });
+    router.push('/');
+    
     formRef.current.reset();
-    redirect('/');
-  }, [product, addItem, editItem]);
+  }, [addItem, editItem, router]);
 
-  return { formRef, handleSubmit };
+  const handleCancel = useCallback(() => {
+    router.push('/');
+  }, [router]);
+
+  return { formRef, handleSubmit, handleCancel };
 }
