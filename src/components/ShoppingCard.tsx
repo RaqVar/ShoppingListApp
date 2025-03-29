@@ -3,18 +3,27 @@ import { ShoppingItem } from "@/types/ShoppingListTypes";
 import { useShoppingForm } from "@/hooks/useShoppingForm";
 import Link from "next/link";
 import Image from "next/image";
+import { useState } from "react";
 
 const Card = ({ product }: { product?: ShoppingItem }) => {
+  const { formRef, handleSubmit, handleCancel } = useShoppingForm({ product });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { formRef, handleSubmit } = useShoppingForm({ product });
+  const onSubmit = async (e: React.FormEvent) => {
+    setIsSubmitting(true);
+    await handleSubmit(e);
+    // No need to set isSubmitting to false as we're navigating away
+  };
+
   return (
-    <div className="max-w-md mx-auto p-6 pr-15 pl-15 bg-[#0a0214] text-white rounded-2xl shadow-lg border border-gray-500">
+    <div className="w-full max-w-md mx-auto p-4 sm:p-6 bg-[#0a0214] text-white rounded-2xl shadow-lg border border-gray-500">
       <div className="flex justify-center">
         <Image
           src={product ? "/images/Edit.png" : "/images/Create.png"}
-          alt="Edit Product"
-          width={100}
-          height={100}
+          alt={product ? "Edit Product" : "Create Product"}
+          width={80}
+          height={80}
+          priority // This helps with loading performance
         />
       </div>
 
@@ -22,16 +31,18 @@ const Card = ({ product }: { product?: ShoppingItem }) => {
         {product ? "Edit Product" : "Create Product"}
       </h1>
 
-      <form ref={formRef} onSubmit={handleSubmit} className="space-y-4 mt-4">
-      <input type="hidden" name="id" value={product?.id} />
+      <form ref={formRef} onSubmit={onSubmit} className="space-y-4 mt-4">
+        <input type="hidden" name="id" value={product?.id || ""} />
+        
         <div>
           <label className="block text-sm font-medium text-gray-300">Name</label>
           <input
             name="name"
             type="text"
-            defaultValue={product?.name}
+            defaultValue={product?.name || ""}
             placeholder="Enter product name"
             className="w-full p-2 mt-1 bg-gray-900 border border-grey-400 rounded-lg text-white focus:ring-2 focus:ring-purple-500"
+            required
           />
         </div>
 
@@ -39,49 +50,60 @@ const Card = ({ product }: { product?: ShoppingItem }) => {
           <label className="block text-sm font-medium text-gray-300">Description</label>
           <textarea
             name="description"
-            defaultValue={product?.description}
+            defaultValue={product?.description || ""}
             placeholder="Enter description"
             className="w-full p-2 mt-1 bg-gray-900 border border-grey-400 rounded-lg text-white focus:ring-2 focus:ring-purple-500"
+            rows={3}
           />
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-300">Price</label>
-          <input
-            name="price"
-            type="number"
-            step="0.01"
-            defaultValue={product?.price}
-            placeholder="Enter price"
-            min={0}
-            className="w-full p-2 mt-1 bg-gray-900 border border-grey-400 rounded-lg text-white focus:ring-2 focus:ring-purple-500"
-          />
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-300">Price</label>
+            <input
+              name="price"
+              type="number"
+              step="0.01"
+              defaultValue={product?.price || "0.00"}
+              placeholder="Enter price"
+              min={0}
+              className="w-full p-2 mt-1 bg-gray-900 border border-grey-400 rounded-lg text-white focus:ring-2 focus:ring-purple-500"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-300">Quantity</label>
+            <input
+              name="quantity"
+              type="number"
+              defaultValue={product?.quantity || "1"}
+              placeholder="Enter quantity"
+              min={1}
+              className="w-full p-2 mt-1 bg-gray-900 border border-grey-400 rounded-lg text-white focus:ring-2 focus:ring-purple-500"
+            />
+          </div>
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-300">Quantity</label>
-          <input
-            name="quantity"
-            type="number"
-            defaultValue={product?.quantity}
-            placeholder="Enter quantity"
-            min={0}
-            className="w-full p-2 mt-1 bg-gray-900 border border-grey-400 rounded-lg text-white focus:ring-2 focus:ring-purple-500"
-          />
-        </div>
-
-        <div className="flex justify-between mt-4">
-          <Link
-            href="/"
-            className="bg-red-500 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition ml-10"
+        <div className="flex justify-between mt-6 pt-4 border-t border-gray-700">
+          <button
+            type="button"
+            onClick={handleCancel}
+            className="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition disabled:opacity-50"
+            disabled={isSubmitting}
           >
             Cancel
-          </Link>
+          </button>
+          
           <button
             type="submit"
-            className="bg-gray-200 text-black px-4 py-2 rounded-lg hover:bg-gray-400 transition mr-10"
+            className="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-lg transition disabled:opacity-50"
+            disabled={isSubmitting}
           >
-            {product ? "Apply" : "Create"}
+            {isSubmitting ? (
+              <span>Processing...</span>
+            ) : (
+              <span>{product ? "Update" : "Create"}</span>
+            )}
           </button>
         </div>
       </form>
