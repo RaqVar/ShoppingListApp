@@ -1,3 +1,5 @@
+'use client'
+
 import { useReducer, useCallback } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import { ShoppingListState, ShoppingItem } from '@/types/ShoppingListTypes'
