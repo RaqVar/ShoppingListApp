@@ -8,24 +8,20 @@ export function useShoppingForm({ product }: { product?: ShoppingItem }) {
 
   useEffect(() => {
     if (product?.id && formRef.current) {
-      const nameInput = formRef.current.elements.namedItem('name') as HTMLInputElement;
-      const descriptionInput = formRef.current.elements.namedItem('description') as HTMLTextAreaElement;
-      const priceInput = formRef.current.elements.namedItem('price') as HTMLInputElement;
-      const quantityInput = formRef.current.elements.namedItem('quantity') as HTMLInputElement;
-
-      if (nameInput && descriptionInput && priceInput && quantityInput) {
-        nameInput.value = product.name;
-        descriptionInput.value = product.description;
-        priceInput.value = String(product.price);
-        quantityInput.value = String(product.quantity);
-      }
+      const form = formRef.current;
+      (form.elements.namedItem("name") as HTMLInputElement)!.value = product.name;
+      (form.elements.namedItem("description") as HTMLInputElement)!.value = product.description;
+      (form.elements.namedItem("price") as HTMLInputElement)!.value = String(product.price);
+      (form.elements.namedItem("quantity") as HTMLInputElement)!.value = String(product.quantity);
     }
   }, [product]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const formData = new FormData(formRef.current!);
+    if (!formRef.current) return;
+
+    const formData = new FormData(formRef.current);
     const name = formData.get("name") as string;
     const description = formData.get("description") as string;
     const price = parseFloat(formData.get("price") as string);
@@ -41,7 +37,7 @@ export function useShoppingForm({ product }: { product?: ShoppingItem }) {
       console.log("Item added:", { name, description, price, quantity });
     }
 
-    formRef.current?.reset();
+    formRef.current.reset();
   };
 
   return { formRef, handleSubmit };
