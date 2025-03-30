@@ -50,14 +50,14 @@ export const ShopItem = ({
           <p className="text-sm text-gray-400 line-clamp-2 mb-3 min-h-[40px]">
             {item.description || "No description provided"}
           </p>
-          
+
           <div className="grid grid-cols-2 gap-2 text-sm mt-auto">
             <div className="bg-gray-700 bg-opacity-50 px-2 py-1 rounded">
-              <span className="text-gray-300">Quantity:</span> 
+              <span className="text-gray-300">Quantity:</span>
               <span className="ml-1 font-medium text-white">{item.quantity}</span>
             </div>
             <div className="bg-gray-700 bg-opacity-50 px-2 py-1 rounded">
-              <span className="text-gray-300">Price:</span> 
+              <span className="text-gray-300">Price:</span>
               <span className="ml-1 font-medium text-white">${item.price.toFixed(2)}</span>
             </div>
           </div>

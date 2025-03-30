@@ -3,7 +3,7 @@ import { db } from "../../data-store"
 
 export async function GET(request: Request, { params }: { params: { id: string } }) {
   try {
-    const { id } = params;
+    const { id } = await Promise.resolve(params);
     
     const item = db.items.find(item => item.id === id);
     
@@ -20,7 +20,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
 
 export async function PUT(request: Request, { params }: { params: { id: string } }) {
   try {
-    const { id } = params;
+    const { id } = await Promise.resolve(params);
     const updatedData = await request.json();
     
     const itemIndex = db.items.findIndex(item => item.id === id);
@@ -46,7 +46,7 @@ export async function PUT(request: Request, { params }: { params: { id: string }
 
 export async function DELETE(request: Request, { params }: { params: { id: string } }) {
   try {
-    const { id } = params;
+    const { id } = await Promise.resolve(params);
     
     const itemIndex = db.items.findIndex(item => item.id === id);
     

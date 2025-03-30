@@ -3,7 +3,7 @@ import { db } from "../../../data-store"
 
 export async function PATCH(request: Request, { params }: { params: { id: string } }) {
   try {
-    const { id } = params;
+    const { id } = await Promise.resolve(params);
     const { completed } = await request.json();
     
     const itemIndex = db.items.findIndex(item => item.id === id);
