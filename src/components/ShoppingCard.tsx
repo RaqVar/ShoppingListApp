@@ -1,7 +1,6 @@
 'use client'
 import { ShoppingItem } from "@/types/ShoppingListTypes";
 import { useShoppingForm } from "@/hooks/useShoppingForm";
-import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -12,18 +11,17 @@ const Card = ({ product }: { product?: ShoppingItem }) => {
   const onSubmit = async (e: React.FormEvent) => {
     setIsSubmitting(true);
     await handleSubmit(e);
-    // No need to set isSubmitting to false as we're navigating away
   };
 
   return (
-    <div className="w-full max-w-md mx-auto p-4 sm:p-6 bg-[#0a0214] text-white rounded-2xl shadow-lg border border-gray-500">
+    <div className="w-full max-w-md mx-auto p-4 sm:p-6 mt-15 bg-[#0a0214] text-white rounded-2xl shadow-lg border border-gray-500">
       <div className="flex justify-center">
         <Image
           src={product ? "/images/Edit.png" : "/images/Create.png"}
           alt={product ? "Edit Product" : "Create Product"}
           width={80}
           height={80}
-          priority // This helps with loading performance
+          priority
         />
       </div>
 
