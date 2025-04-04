@@ -1,6 +1,6 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { v4 as uuidv4 } from "uuid";
-import { db } from "../data-store"
+import { db } from "../data-store"; // Ajustá si tu estructura lo necesita
 
 export async function GET() {
   try {
@@ -11,10 +11,10 @@ export async function GET() {
   }
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
     const item = await request.json();
-    
+
     const newItem = {
       id: item.id || uuidv4(),
       name: item.name,
@@ -25,10 +25,10 @@ export async function POST(request: Request) {
       createdAt: new Date(),
       updatedAt: new Date()
     };
-    
+
     db.items.push(newItem);
     console.log('Item created:', newItem);
-    
+
     return NextResponse.json(newItem, { status: 201 });
   } catch (error) {
     console.error('Error POST:', error);
