@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { ShopItem } from './ShoppingItem';
 import { useShoppingList } from '@/hooks/useShoppingList';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 
 export const ShopList = () => {
   const { state, toggleItemComplete, removeItem } = useShoppingList();

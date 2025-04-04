@@ -1,6 +1,5 @@
 import React from 'react';
 import { ShoppingItem } from '@/types/ShoppingListTypes';
-import Image from 'next/image';
 
 interface ShopItemProps {
   item: ShoppingItem;

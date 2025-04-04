@@ -2,7 +2,7 @@
 
 import { useState, useReducer, useCallback, useEffect } from 'react'
 import { v4 as uuidv4 } from 'uuid'
-import { ShoppingListState, ShoppingItem } from '@/types/ShoppingListTypes'
+import { ShoppingItem } from '@/types/ShoppingListTypes'
 import { shoppingListReducer, initialState } from '@/reducers/shoppingListReducer'
 
 const API_URL = '/api/items';
@@ -92,7 +92,6 @@ export function useShoppingList() {
                 body: JSON.stringify(item),
             });
             if (!response.ok) throw new Error('Failed to update item');
-            const updatedItem = await response.json();
 
         } catch (error) {
             dispatch({ type: 'EDIT_ITEM', payload: currentItem });
