@@ -52,7 +52,6 @@ export async function DELETE(request: NextRequest, context: { params: { id: stri
       return NextResponse.json({ error: "Item not found" }, { status: 404 });
     }
 
-    const deletedItem = db.items[itemIndex];
     db.items = db.items.filter(item => item.id !== id);
 
     return NextResponse.json({ message: "Item deleted successfully" });
