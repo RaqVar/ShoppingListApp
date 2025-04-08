@@ -27,7 +27,7 @@ export const ShopList = () => {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 md:mb-10 gap-4">
         <div className="flex items-center">
           <img src="/images/Create.png" alt="Shopping List Logo" width={50} height={50} className="md:w-[75px] md:h-[75px]" />
-          <h1 className="text-xl md:text-2xl font-bold ml-2">Shopping List</h1>
+          <h1 className="text-white text-xl md:text-2xl font-bold ml-2">Shopping List</h1>
         </div>
         <button
           onClick={handleCreateProduct}
